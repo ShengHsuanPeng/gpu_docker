@@ -21,13 +21,17 @@ for account in "${accounts[@]}"; do
         # su - $username -c "PATH=/home/$username/.local/bin:$PATH pip3 install --user sympy"
     fi
 
-    # 建立 ftp userlist 條目
-    echo "$username" >> /etc/vsftpd.userlist
-
+    # 檢查並添加 FTP 使用者（避免重複）
+    if ! grep -q "^$username$" /etc/vsftpd.userlist; then
+        echo "$username" >> /etc/vsftpd.userlist
+    fi
 done
 
-# 啟動 vsftpd
-/usr/sbin/vsftpd /etc/vsftpd.conf &
+# 啟動 vsftpd（如果尚未運行）
+if ! pgrep -x "vsftpd" > /dev/null; then
+    echo "🔄 啟動 vsftpd 服務"
+    /usr/sbin/vsftpd /etc/vsftpd.conf &
+fi
 
 # 啟動 sshd 或其他傳入命令
 exec "$@"
