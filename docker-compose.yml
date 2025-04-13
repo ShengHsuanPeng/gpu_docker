@@ -5,20 +5,20 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: gpu-server-image
-    container_name: gpu-container
+    image: torch-cu128-image
+    container_name: torch-cu128-container
     ports:
-      - "2152:22"        # SSH
-      - "2151:21"          # FTP
-      - "21000-21010:21000-21010"  # FTP Passive ports
+      - "2152:22"                   # SSH
+      - "2151:21"                   # FTP
+      - "21000-21010:21000-21010"   # FTP Passive ports
     runtime: nvidia
-    deploy:
-      resources:
-        limits:
-          cpus: '1.5'
-          memory: 2g
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '4'
+    #       memory: 4g
     environment:
-      - USERS=${USERS}   # 定義於 .env
+      - USERS=${USERS}              # 定義於 .env
     volumes:
       - /mnt/d/containers/ubuntu/home:/home
     restart: unless-stopped

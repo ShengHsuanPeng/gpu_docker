@@ -13,11 +13,7 @@ for account in "${accounts[@]}"; do
         echo "$username:$password" | chpasswd
         usermod -aG sudo "$username"
 
-        # 初始化個人環境
-        mkdir -p /home/$username/.local/bin
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> /home/$username/.bashrc
-
-        # 權限設定：只允許本人讀寫 (Volume 掛載下不支援)
+        # 權限設定：只允許本人讀寫 (Windows Volume 掛載下不支援)
         # chown -R $username:$username /home/$username
         # chmod 700 /home/$username
 
