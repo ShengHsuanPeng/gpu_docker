@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: torch-cu128-image
+    image: torch-cu128-image:latest
     container_name: torch-cu128-container
     ports:
       - "2152:22"                   # SSH
