@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 將 USERS=gmm:pass1,dev1:pass2 格式轉成多位使用者建立
+# 將 USERS=user1:pass1,user2:pass2 格式轉成多位使用者建立
 IFS=',' read -ra accounts <<< "$USERS"
 for account in "${accounts[@]}"; do
     IFS=':' read -ra parts <<< "$account"
