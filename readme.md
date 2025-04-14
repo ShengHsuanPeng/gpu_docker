@@ -1,76 +1,76 @@
-# GPU 容器建置教學
+# GPU Container Setup Guide
 
-## 前置需求
+## Prerequisites
 
-1. 安裝 Docker 和 Docker Compose
-2. 安裝 NVIDIA Container Toolkit
-3. 確保系統有 NVIDIA GPU 驅動程式
+1. Install Docker and Docker Compose
+2. Install NVIDIA Container Toolkit
+3. Ensure NVIDIA GPU drivers are installed
 
-## 專案結構
+## Project Structure
 
 ```
 .
-├── Dockerfile          # 容器映像檔定義
-├── docker-compose.yml  # 容器服務配置
-├── vsftpd.conf        # FTP 服務配置
-├── entrypoint.sh      # 容器啟動腳本
-└── .env               # 環境變數設定
+├── Dockerfile          # Container image definition
+├── docker-compose.yml  # Container service configuration
+├── vsftpd.conf        # FTP service configuration
+├── entrypoint.sh      # Container startup script
+└── .env               # Environment variables configuration
 ```
 
-## 建置與啟動容器
+## Build and Start Container
 
-1. 建立專案目錄並複製所有必要檔案
-2. 設定環境變數檔案 (.env)
-3. 執行以下命令：
+1. Create project directory and copy all necessary files
+2. Configure environment variables file (.env)
+3. Execute the following commands:
 
 ```bash
-# 建置並啟動容器
+# Build and start container
 docker-compose up -d --build
 
-# Windows 端口轉發設定
+# Windows port forwarding settings
 netsh interface portproxy add v4tov4 listenport=8152 listenaddress=0.0.0.0 connectport=2152 connectaddress=127.0.0.1
 netsh interface portproxy add v4tov4 listenport=8151 listenaddress=0.0.0.0 connectport=2151 connectaddress=127.0.0.1
 ```
 
-## 連線方式
+## Connection Methods
 
-### SSH 連線
+### SSH Connection
 ```bash
 ssh dev1@172.16.201.84 -p 8152
 ```
 
-### FTP 連線 (ex: 使用 FileZilla)
+### FTP Connection (e.g., using FileZilla)
 - Host: 172.16.201.84
 - Username: user1
 - Password: pass1
 - Port: 8151
 
-## 注意事項
+## Important Notes
 
-1. 確保主機有足夠的磁碟空間
-2. 檢查 NVIDIA GPU 驅動程式是否正確安裝
-3. 確認 Docker 和 NVIDIA Container Toolkit 已正確配置
-4. 定期備份重要資料
-5. 注意安全性設定，定期更新密碼
+1. Ensure sufficient disk space on the host
+2. Verify NVIDIA GPU drivers are correctly installed
+3. Confirm Docker and NVIDIA Container Toolkit are properly configured
+4. Regularly backup important data
+5. Pay attention to security settings and update passwords periodically
 
-## 故障排除
+## Troubleshooting
 
-1. 檢查容器日誌：
+1. Check container logs:
 ```bash
 docker-compose logs
 ```
 
-2. 檢查 GPU 是否可用：
+2. Check GPU availability:
 ```bash
 nvidia-smi
 ```
 
-3. 檢查容器狀態：
+3. Check container status:
 ```bash
 docker-compose ps
 ```
 
-4. 重新啟動容器：
+4. Restart container:
 ```bash
 docker-compose restart
 ``` 

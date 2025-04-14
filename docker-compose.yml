@@ -18,7 +18,7 @@ services:
     #       cpus: '4'
     #       memory: 4g
     environment:
-      - USERS=${USERS}              # 定義於 .env
+      - USERS=${USERS}              # Defined in .env 
     volumes:
       - /mnt/d/containers/ubuntu/home:/home
     restart: unless-stopped
